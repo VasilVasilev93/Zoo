@@ -1,3 +1,7 @@
+import random
+
+
+
 class Animal:
     INITIAL_CHANCE_TO_DIE = 1
 
@@ -18,9 +22,13 @@ class Animal:
         self.chance_to_die = self.INITIAL_CHANCE_TO_DIE
 
     def grow(self):
-        self.age += 0.033
-        self.weight += 1
-        self.chance_to_die = self.age / self.life_expectancy
+        if self.is_alive:
+            self.age += 0.033
+            self.weight += 1
+            self.chance_to_die = self.age / self.life_expectancy
+            chance = random.randint(0, 1)
+            if chance < self.chance_to_die:
+                self.is_alive = False
 
     def eat(self, food_weight):
         self.weight += food_weight

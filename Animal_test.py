@@ -5,7 +5,7 @@ from Animal import Animal
 class TestAnimal(unittest.TestCase):
 
     def setUp(self):
-        self.animal = Animal("name", 18, "male", 87, "species", 10, "carnivore", 9, 20, 100, 200, 20)
+        self.animal = Animal("name", 18, "male", 87, "species", 20, "carnivore", 9, 20, 100, 200, 20)
 
     def test_animal_init(self):
         self.assertEqual(self.animal.name, "name")
@@ -13,7 +13,7 @@ class TestAnimal(unittest.TestCase):
         self.assertEqual(self.animal.gender, "male")
         self.assertEqual(self.animal.weight, 87)
         self.assertEqual(self.animal.species, "species")
-        self.assertEqual(self.animal.life_expectancy, 10)
+        self.assertEqual(self.animal.life_expectancy, 20)
         self.assertEqual(self.animal.food_type, "carnivore")
         self.assertEqual(self.animal.gestation_period, 9)
         self.assertEqual(self.animal.newborn_weight, 20)

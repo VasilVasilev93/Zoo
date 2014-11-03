@@ -2,7 +2,7 @@ class Zoo():
 
     MEAT_PRICE = 4
     WEED_PRICE = 2
-
+    TIME_PASSED = 0
     INCOME_FOR_ANIMAL = 60
 
     def __init__(self, animals, capacity, budget):
@@ -44,6 +44,7 @@ class Zoo():
         return self.animals
 
     def animal_reproduce(self, male, female):
-        if female.gender == female and male.gender == male:
+        if female.gender == 'female' and male.gender == 'male':
+            
             return True
         return False

@@ -18,7 +18,7 @@ class Animal:
         self.chance_to_die = self.INITIAL_CHANCE_TO_DIE
 
     def grow(self):
-        self.age += 1
+        self.age += 0.033
         self.weight += 1
         self.chance_to_die = self.age / self.life_expectancy
 

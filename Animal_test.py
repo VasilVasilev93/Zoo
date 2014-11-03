@@ -24,7 +24,7 @@ class TestAnimal(unittest.TestCase):
 
     def test_animal_grow(self):
         self.animal.grow()
-        self.assertEqual(self.animal.age, 19)
+        self.assertEqual(self.animal.age, 18.033)
         self.assertEqual(self.animal.weight, 88)
 
     def test_animal_eat(self):

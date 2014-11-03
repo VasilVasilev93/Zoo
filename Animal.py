@@ -33,7 +33,6 @@ class Animal:
     def eat(self, food_weight):
         self.weight += food_weight
 
-    def see_animals(self):
 
 
 

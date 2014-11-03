@@ -26,8 +26,8 @@ class Animal:
             self.age += 0.033
             self.weight += 1
             self.chance_to_die = self.age / self.life_expectancy
-            chance = random.randint(0, 1)
-            if chance < self.chance_to_die:
+            chance = random.randint(0, 100)
+            if chance / 100 < self.chance_to_die:
                 self.is_alive = False
 
     def eat(self, food_weight):

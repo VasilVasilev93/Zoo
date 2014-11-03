@@ -35,11 +35,13 @@ class Test_Zoo(unittest.TestCase):
 
     def test_animal_die(self):
         output = [self.animal]
+        self.animal1.is_alive = False
         result = self.zoo.animal_die(self.animal1)
         self.assertEqual(output, result)
 
     def test_reproduction(self):
-        self.assertTrue(self.zoo.animal_reproduce(self.animal, self.animal1))
+        self.zoo.animal_reproduce()
+        self.assertEqual(len(self.zoo.babies), 1)
 
 if __name__ == '__main__':
     unittest.main()

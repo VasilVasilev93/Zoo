@@ -1,14 +1,21 @@
+from Animal import Animal
+import random
+
+
 class Zoo():
 
     MEAT_PRICE = 4
     WEED_PRICE = 2
     TIME_PASSED = 0
     INCOME_FOR_ANIMAL = 60
+    GENDERS = ["male", "female"]
 
     def __init__(self, animals, capacity, budget):
         self.animals = animals
         self.capacity = capacity
         self.budget = budget
+        self.babies = []
+        self.pregnants = []
 
     def accommodate_animal(self, animal):
         if self.capacity > len(self.animals):
@@ -37,16 +44,21 @@ class Zoo():
 
     def animal_die(self, animal):
         alive_animals = self.animals
-        # for animal in self.animals:
-        #     if not animal.is_alive:
-        alive_animals.remove(animal)
+        for animal in self.animals:
+            if not animal.is_alive:
+                alive_animals.remove(animal)
         self.animals = alive_animals
         return self.animals
 
-    def animal_reproduce(self, male, female):
-        if female.gender == 'female' and male.gender == 'male':
-            
-            return True
-        return False
-
-
+    def animal_reproduce(self):
+        for i in range(0, len(self.animals)):
+            for j in range(0, len(self.animals)):
+                if (self.animals[i].gender == 'male' and self.animals[j].gender == 'female'
+                    and self.animals[i].species == self.animals[j].species
+                    and self.TIME_PASSED % 6 == 0 and
+                        self.animals[i] not in self.pregnants):
+                    animal = Animal("animal", -self.animals[i].gestation_period,
+                                    random.choice(self.GENDERS),
+                                    87, "species", 20, "carnivore", 9, 20, 100, 200, 20)
+                    self.babies.append(animal)
+                    self.pregnants.append(self.animals[j])

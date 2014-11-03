@@ -4,6 +4,7 @@ class Zoo():
     WEED_PRICE = 2
     TIME_PASSED = 0
     INCOME_FOR_ANIMAL = 60
+    FOOD_DAY_DOSE = 5
 
     def __init__(self, animals, capacity, budget):
         self.animals = animals
@@ -45,8 +46,22 @@ class Zoo():
 
     def animal_reproduce(self, male, female):
         if female.gender == 'female' and male.gender == 'male':
-            
             return True
         return False
+
+    def simulate(interval_of_time, period):
+        if period == "weeks":
+            period /= 7
+        elif period == "months":
+            period /= 30
+        while period >= 0:
+            for animal in self.animals:
+                animal.eat(self.FOOD_DAY_DOSE)
+                animal.grow()
+                self.animal_die(animal)
+            self.animal_reproduce()
+
+
+
 
 

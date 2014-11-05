@@ -163,3 +163,31 @@ class Zoo():
 
         self.see_animals()
         self.print_grave_yard()
+
+
+def main():
+    animal1 = Animal("name", 18, "male", 87, "species", 20, "carnivore", 9, 20, 100, 200, 20)
+    animal2 = Animal("animal", 18, "male", 87, "panda", 20, "carnivore", 9, 20, 100, 200, 20)
+    animal3 = Animal("animal3", 18, "female", 87, "panda", 20, "carnivore", 9, 20, 100, 200, 20)
+    animals = [animal1, animal2, animal3]
+    zoo = Zoo(animals, 20, 1000)
+    command = ""
+    while(command != "exit"):
+        command = input("enter command:")
+        if command == "see_animals":
+            zoo.see_animals()
+        else:
+            command = command.split(" ")
+            if command[0] == "accommodate":
+                animal = Animal(command[2], command[3], None, command[4], command[1], None, None, None, None, None, None, None,)
+                zoo.accommodate(animal)
+            elif command[0] == "move_to_habitat":
+                zoo.move_to_habitat(command[1], command[2])
+            elif command[0] == "simulate":
+                zoo.simulate(command[1], command[2])
+
+
+
+
+if __name__ == '__main__':
+    main()

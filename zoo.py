@@ -10,7 +10,6 @@ class Zoo():
     INCOME_FOR_ANIMAL = 60
     FOOD_DAY_DOSE = 5
     GENDERS = ["male", "female"]
-    REPRODUCE_PERIOD = 6
 
     def __init__(self, animals, capacity, budget):
         self.animals = animals
@@ -54,33 +53,6 @@ class Zoo():
         self.animals = alive_animals
         return grave_yard
 
-    def _are_different_genders(self, animal1_gender, animal2_gender):
-        if animal1_gender == 'female':
-            return animal1_gender != animal2_gender
-        return False
-
-    def _is_time_to_reproduce(self, animal1, animal2):
-        if animal1.gender == 'female':
-            animal1_time = animal1.age % self.REPRODUCE_PERIOD
-            animal2_time = animal2.age % self.REPRODUCE_PERIOD
-        if animal1_time == 0 and animal2_time == 0:
-            return True
-        return False
-
-    def _is_some_animal_pregnant(self, animal1, animal2):
-        if animal1 not in self.pregnants or animal2 not in self.pregnants:
-            return True
-        return False
-
-    def _is_ready_to_reproduce(self, animal1, animal2):
-        if not self._are_different_genders(animal1.gender, animal2.gender):
-            return False
-        if not self._is_time_to_reproduce(animal1, animal2):
-            return False
-        if not self._is_some_animal_pregnant(animal1, animal2):
-            return False
-        return True
-
     def move_to_habitat(self, species, name):
         for animal in self.animals:
             if animal.species == species and animal.name == name:
@@ -90,27 +62,15 @@ class Zoo():
     def animal_reproduce(self):
         for i in range(0, len(self.animals)):
             for j in range(0, len(self.animals)):
-                animal1 = self.animals[i]
-                animal2 = self.animals[j]
-                if self._is_ready_to_reproduce(animal1, animal2):
-                    baby_gest_period = -animal1.gestation_period
-                    baby_gender = random.choice(self.GENDERS)
-                    baby_species = animal1.species
-                    animal = Animal("animal", baby_gest_period,
-                                    baby_gender, 87, baby_species, 20,
-                                    "carnivore", 9, 20, 100, 200, 20)
+                if (self.animals[i].gender == 'male' and self.animals[j].gender == 'female'
+                    and self.animals[i].species == self.animals[j].species
+                    and self.TIME_PASSED % 6 == 0 and
+                        self.animals[i] not in self.pregnants):
+                    animal = Animal("animal", -self.animals[i].gestation_period,
+                                    random.choice(self.GENDERS),
+                                    87, "species", 20, "carnivore", 9, 20, 100, 200, 20)
                     self.babies.append(animal)
-                    self.pregnants.append(animal1)
-
-    def baby_born(self):
-        for baby in self.babies:
-            if baby.age == 0:
-                for mother in self.pregnants:
-                    if mother.age == mother.age + 6:
-                        #todo -2months mother's age
-                        self.pregnants.remove(mother)
-                self.animals.append(baby)
-                self.babies.remove(baby)
+                    self.pregnants.append(self.animals[j])
 
     def get_new_born_animals(self):
         new_borns = []
@@ -135,6 +95,8 @@ class Zoo():
             print("Dead animals: ")
             for animal in self.grave_yard:
                 print("{} : {}".format(animal.name, animal.species))
+
+
 
     def simulate(self, interval_of_time, period):
         if period == "weeks":
@@ -161,6 +123,23 @@ class Zoo():
             if new_borns != []:
                 print("Animals conceived today : ", "  ".join(new_borns))
             self.animal_reproduce()
-
         self.see_animals()
         self.print_grave_yard()
+
+
+
+
+def main():
+    zoo = Zoo()
+
+
+
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    main()

@@ -151,14 +151,12 @@ class Zoo():
             period /= 4
         elif interval_of_time == "year":
             period *= 12
-        counter = 0
-
         while period >= 0:
             for animal in self.animals:
                 animal.eat(self.FOOD_DAY_DOSE)
                 animal.pregnancy_ban -= 0.033
                 animal.grow()
-            self.animal_die()
+                print("GROW")
             animals_going_to_die = self.animals_are_going_to_die()
             if animals_going_to_die != []:
                 print("These animals are going to die: ", animals_going_to_die)
@@ -174,19 +172,18 @@ class Zoo():
             if new_borns != []:
                 print("Animals conceived today : ", "  ".join(new_borns))
             self.animal_reproduce()
-            period -= 0.033
-            counter += 1
+            period -= 0.33
 
-        print (counter)
+
         self.see_animals()
         self.print_grave_yard()
 
 
 def main():
     animal1 = Animal("name", 18, "male", 87, "species", 40, "carnivore", 4, 20, 100, 200, 20)
-    animal2 = Animal("animal", 18, "male", 87, "panda", 1000.0, "carnivore", 4, 20, 100, 200, 20)
+    animal2 = Animal("animal", 18, "male", 87, "panda", 100, "carnivore", 4, 20, 100, 200, 20)
     animal3 = Animal("animal3", 18, "female", 87, "panda", 100, "carnivore", 4, 20, 100, 200, 20)
-    animals = [animal2]
+    animals = [animal1, animal2, animal3]
     zoo = Zoo(animals, 20, 1000)
     command = ""
     while(True):

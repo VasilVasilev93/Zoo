@@ -24,12 +24,17 @@ class Animal:
 
     def grow(self):
         if self.is_alive:
-            self.age += 0.033
+            self.age += 1 / 365
             self.weight += 1
-            self.chance_to_die = self.age / self.life_expectancy
+            self.chance_to_die = self.age / (self.life_expectancy * 100 * 365)
             chance = random.randint(0, 100)
-            if chance / 100 < self.chance_to_die:
+            if chance < self.chance_to_die:
+                print(self.age)
+                print (self.chance_to_die, chance)
                 self.is_alive = False
 
     def eat(self, food_weight):
         self.weight += food_weight
+
+    def __str__(self):
+        return self.name

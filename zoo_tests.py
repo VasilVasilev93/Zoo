@@ -33,12 +33,6 @@ class Test_Zoo(unittest.TestCase):
         result = self.zoo.get_daily_outcomes()
         self.assertEqual(output, result)
 
-    def test_animal_die(self):
-        output = [self.animal]
-        self.animal1.is_alive = False
-        result = self.zoo.animal_die(self.animal1)
-        self.assertEqual(output, result)
-
     def test_reproduction(self):
         self.zoo.animal_reproduce()
         self.assertEqual(len(self.zoo.babies), 1)
@@ -47,6 +41,11 @@ class Test_Zoo(unittest.TestCase):
         output = [self.animal1]
         self.zoo.animal_reproduce()
         self.assertEqual(output, self.zoo.pregnants)
+
+    def test_if_mother_can_reproduce_before_reproduce_ban_expired(self):
+        self.zoo.animal_reproduce()
+        self.animal1.pregnancy_ban = 6
+        self.assertFalse(self.zoo.animal_reproduce())
 
 if __name__ == '__main__':
     unittest.main()

@@ -72,12 +72,19 @@ class Zoo():
             return True
         return False
 
+    def _has_pregnancy_ban_passed(self, animal1):
+        if animal1.gender == 'female' and animal1.pregnancy_ban <= 0:
+            return True
+        return False
+
     def _is_ready_to_reproduce(self, animal1, animal2):
         if not self._are_different_genders(animal1.gender, animal2.gender):
             return False
         if not self._is_time_to_reproduce(animal1, animal2):
             return False
         if not self._is_some_animal_pregnant(animal1, animal2):
+            return False
+        if not self._has_pregnancy_ban_passed(animal1):
             return False
         return True
 
@@ -101,13 +108,15 @@ class Zoo():
                                     "carnivore", 9, 20, 100, 200, 20)
                     self.babies.append(animal)
                     self.pregnants.append(animal1)
+                    return True
+        return False
 
     def baby_born(self):
         for baby in self.babies:
             if baby.age == 0:
                 for mother in self.pregnants:
-                    if mother.age == mother.age + 6:
-                        #todo -2months mother's age
+                    if mother.age == mother.age + mother.gestation_period:
+                        mother.pregnancy_ban += mother.gestation_period
                         self.pregnants.remove(mother)
                 self.animals.append(baby)
                 self.babies.remove(baby)
@@ -144,6 +153,7 @@ class Zoo():
         while period >= 0:
             for animal in self.animals:
                 animal.eat(self.FOOD_DAY_DOSE)
+                animal.pregnancy_ban -= 0.033
                 animal.grow()
             animals_going_to_die = self.animals_are_going_to_die()
             if animals_going_to_die != []:

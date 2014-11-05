@@ -18,6 +18,7 @@ class Zoo():
         self.budget = budget
         self.babies = []
         self.pregnants = []
+        self.grave_yard = []
 
     def accommodate_animal(self, animal):
         if self.capacity > len(self.animals):
@@ -37,30 +38,31 @@ class Zoo():
         outcomes = 0
         for animal in self.animals:
             if animal.food_type == 'meat':
-                self.budget -= self.MEAT_PRICE
                 outcomes += self.MEAT_PRICE
             else:
-                self.budget -= self.WEED_PRICE
                 outcomes += self.WEED_PRICE
         return outcomes
 
-    def animal_die(self, animal):
+    def animal_die(self):
+        grave_yard = []
         alive_animals = self.animals
         for animal in self.animals:
             if not animal.is_alive:
+                grave_yard.append(animal)
+                self.grave_yard.append(animal)
                 alive_animals.remove(animal)
         self.animals = alive_animals
-        return self.animals
+        return grave_yard
 
     def _are_different_genders(self, animal1_gender, animal2_gender):
         if animal1_gender == 'female':
             return animal1_gender != animal2_gender
         return False
 
-    def _is_time_to_reproduce(self, animal1_age, animal2_age):
+    def _is_time_to_reproduce(self, animal1, animal2):
         if animal1.gender == 'female':
-            animal1_time = animal1_age % self.REPRODUCE_PERIOD
-            animal2_time = animal1_age % self.REPRODUCE_PERIOD
+            animal1_time = animal1.age % self.REPRODUCE_PERIOD
+            animal2_time = animal2.age % self.REPRODUCE_PERIOD
         if animal1_time == 0 and animal2_time == 0:
             return True
         return False
@@ -73,11 +75,17 @@ class Zoo():
     def _is_ready_to_reproduce(self, animal1, animal2):
         if not self._are_different_genders(animal1.gender, animal2.gender):
             return False
-        if not self._is_time_to_reproduce(animal1.age, animal2.age):
+        if not self._is_time_to_reproduce(animal1, animal2):
             return False
         if not self._is_some_animal_pregnant(animal1, animal2):
             return False
         return True
+
+    def move_to_habitat(self, species, name):
+        for animal in self.animals:
+            if animal.species == species and animal.name == name:
+                self.animals.remove(animal)
+                break
 
     def animal_reproduce(self):
         for i in range(0, len(self.animals)):
@@ -104,6 +112,30 @@ class Zoo():
                 self.animals.append(baby)
                 self.babies.remove(baby)
 
+    def get_new_born_animals(self):
+        new_borns = []
+        for animal in self.babies:
+            if animal.age == -6:
+                new_borns.append(animal)
+        return new_borns
+
+    def animals_are_going_to_die(self):
+        animals_going_to_die = []
+        for animal in self.animals:
+            if animal.life_expectancy - animal.age < 2:
+                animals_going_to_die.append(animal)
+        return animals_going_to_die
+
+    def see_animals(self):
+        for animal in self.animals:
+            print("{} : {}, {}, {}".format(animal.name, animal.species, animal.age, animal.weight))
+
+    def print_grave_yard(self):
+        if self.grave_yard != []:
+            print("Dead animals: ")
+            for animal in self.grave_yard:
+                print("{} : {}".format(animal.name, animal.species))
+
     def simulate(self, interval_of_time, period):
         if period == "weeks":
             period /= 7
@@ -113,5 +145,21 @@ class Zoo():
             for animal in self.animals:
                 animal.eat(self.FOOD_DAY_DOSE)
                 animal.grow()
-                self.animal_die(animal)
+            animals_going_to_die = self.animals_are_going_to_die()
+            if animals_going_to_die != []:
+                print("These animals are going to die: ", "  ".join(animals_going_to_die))
+            dead_animals = self.dead_animals()
+            if dead_animals != []:
+                print("Dead animals today : ", "  ".join(dead_animals))
+            self.budget += self.get_daily_incomes
+            self.budget -= self.get_daily_outcomes
+            if self.budget < 0:
+                print("Dont have enought money to feed all animals !!!")
+                break
+            new_borns = self.get_new_born_animals()
+            if new_borns != []:
+                print("Animals conceived today : ", "  ".join(new_borns))
             self.animal_reproduce()
+
+        self.see_animals()
+        self.print_grave_yard()

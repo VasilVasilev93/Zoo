@@ -104,9 +104,10 @@ class Zoo():
         elif period == "months":
             period /= 30
         while period >= 0:
-            for animal in self.animals:
+            for animal, baby in zip(self.animals, self.babies):
                 animal.eat(self.FOOD_DAY_DOSE)
                 animal.grow()
+                baby.grow()
             animals_going_to_die = self.animals_are_going_to_die()
             if animals_going_to_die != []:
                 print("These animals are going to die: ", "  ".join(animals_going_to_die))
@@ -118,7 +119,7 @@ class Zoo():
             if self.budget < 0:
                 print("Dont have enought money to feed all animals !!!")
                 break
-            new_borns = get_new_born_animals()
+            new_borns = self.get_new_born_animals()
             if new_borns != []:
                 print("Animals conceived today : ", "  ".join(new_borns))
             self.animal_reproduce()

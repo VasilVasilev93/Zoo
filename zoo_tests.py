@@ -43,5 +43,10 @@ class Test_Zoo(unittest.TestCase):
         self.zoo.animal_reproduce()
         self.assertEqual(len(self.zoo.babies), 1)
 
+    def test_list_of_pregnants_animal_when_reproduced(self):
+        output = [self.animal1]
+        self.zoo.animal_reproduce()
+        self.assertEqual(output, self.zoo.pregnants)
+
 if __name__ == '__main__':
     unittest.main()

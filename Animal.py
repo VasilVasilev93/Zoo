@@ -20,6 +20,7 @@ class Animal:
         self.weight_age_ratio = weight_age_ratio
         self.food_weight_ratio = food_weight_ratio
         self.chance_to_die = self.INITIAL_CHANCE_TO_DIE
+        self.pregnancy_age = age
         self.pregnancy_ban = 0
         self.reproduce_ban = 0
 

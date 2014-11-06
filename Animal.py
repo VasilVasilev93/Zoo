@@ -30,8 +30,9 @@ class Animal:
 
     def grow(self):
         if self.is_alive:
-            self.age += 0.033
+            self.age += 1 / 30
             self.weight += 1
+
             if self._is_close_to_death(self.age):
                 self.chance_to_die = (self.age / self.life_expectancy) * 100
                 chance = random.randint(0, 100)
@@ -40,3 +41,6 @@ class Animal:
 
     def eat(self, food_weight):
         self.weight += food_weight
+
+    def __str__(self):
+        return self.name

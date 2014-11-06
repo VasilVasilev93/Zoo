@@ -156,7 +156,7 @@ class Zoo():
         while period >= 0:
             for animal in self.animals:
                 animal.eat(self.FOOD_DAY_DOSE)
-                animal.pregnancy_ban -= 0.033
+                animal.pregnancy_ban -= 1/30
                 animal.grow()
             self.animal_die()
             animals_going_to_die = self.animals_are_going_to_die()
@@ -174,7 +174,7 @@ class Zoo():
             if new_borns != []:
                 print("Animals conceived today : ", "  ".join(new_borns))
             self.animal_reproduce()
-            period -= 0.033
+            period -= 1/30
             counter += 1
 
         print (counter)

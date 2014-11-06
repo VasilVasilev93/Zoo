@@ -24,7 +24,7 @@ class Animal:
 
     def grow(self):
         if self.is_alive:
-            self.age += 1 / 365
+            self.age += 1 / 30
             self.weight += 1
             self.chance_to_die = self.age / (self.life_expectancy * 100 * 365)
             chance = random.randint(0, 100)

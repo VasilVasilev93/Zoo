@@ -122,10 +122,10 @@ class Zoo():
         for baby in self.babies:
             if baby.age >= 0:
                 for mother in self.pregnants:
-                    print ("mother when she got pregnant: ", mother.age - mother.gestation_period)
-                    print ("baby sasdas: ", mother.age - baby.age)
+                    #print ("mother when she got pregnant: ", mother.age - mother.gestation_period)
+                    #print ("baby sasdas: ", mother.age - baby.age)
                     if mother.age - mother.gestation_period == mother.age - baby.age:
-                        print ("NOOOOO")
+                       # print ("NOOOOO")
                         mother.pregnancy_ban += mother.gestation_period
                         self.pregnants.remove(mother)
                 self.animals.append(baby)
@@ -166,10 +166,10 @@ class Zoo():
             period *= 365
         while period > 0:
             count += 1
-            print (self.animal_reproduce())
+            self.animal_reproduce()
             self.baby_born()
-            print (self.pregnants)
-            print (self.babies)
+            #print (self.pregnants)
+            #print (self.babies)
             for animal in self.animals:
                 animal.eat(self.FOOD_DAY_DOSE)
 
@@ -210,7 +210,6 @@ class Zoo():
 
             self.animal_reproduce()
             period -= 1/30
-            counter += 1
 
 
             period -= 1

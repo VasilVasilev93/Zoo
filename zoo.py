@@ -62,7 +62,7 @@ class Zoo():
     def _is_time_to_reproduce(self, animal1, animal2):
         animal1_ban = animal1.reproduce_ban
         animal2_ban = animal2.reproduce_ban
-        if animal1.gender == 'female' and animal1_ban == 0 and animal2_ban == 0:
+        if animal1.gender == 'female' and animal1_ban <= 0 and animal2_ban <= 0:
             return True
         return False
 

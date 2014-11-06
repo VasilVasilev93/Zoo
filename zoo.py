@@ -113,8 +113,8 @@ class Zoo():
                                   baby_gender, 87, baby_species, 100,
                                   "carnivore", 9, 20, 100, 200, 20)
                     self.babies.append(baby)
+                    animal1.pregnancy_age = animal1.age
                     self.pregnants.append(animal1)
-                    print (baby.name)
                     return True
         return False
 
@@ -122,12 +122,10 @@ class Zoo():
         for baby in self.babies:
             if baby.age >= 0:
                 for mother in self.pregnants:
-                    print ("mother when she got pregnant: ", mother.age - mother.gestation_period)
-                    print ("baby sasdas: ", mother.age - baby.age)
-                    if mother.age - mother.gestation_period == mother.age - baby.age:
-                        print ("NOOOOO")
+                    if int(mother.pregnancy_age) == int(mother.age) - mother.gestation_period:
                         mother.pregnancy_ban += mother.gestation_period
                         self.pregnants.remove(mother)
+
                 self.animals.append(baby)
                 self.babies.remove(baby)
 
@@ -166,10 +164,8 @@ class Zoo():
             period *= 365
         while period > 0:
             count += 1
-            print (self.animal_reproduce())
+            self.animal_reproduce()
             self.baby_born()
-            print (self.pregnants)
-            print (self.babies)
             for animal in self.animals:
                 animal.eat(self.FOOD_DAY_DOSE)
                 if animal.pregnancy_ban > 0:
@@ -204,7 +200,7 @@ class Zoo():
             if new_borns != []:
                 print("Animals conceived today : ", "  ".join(new_borns))
             period -= 1
-        print (count)
+        #print (count)
         self.see_animals()
         self.print_grave_yard()
 
@@ -217,7 +213,7 @@ def main():
     animals = [animal1, animal2, animal3, animal4]
     zoo = Zoo(animals, 20, 1000)
     command = ""
-    while(command != "exit"):
+    while(True):
         command = input("enter command:")
         if command == "see_animals":
             zoo.see_animals()
@@ -231,6 +227,8 @@ def main():
                 zoo.move_to_habitat(command[1], command[2])
             elif command[0] == "simulate":
                 zoo.simulate(command[1], command[2])
+            elif command[0] == "exit":
+                return False
 
 
 if __name__ == '__main__':

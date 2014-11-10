@@ -1,5 +1,6 @@
 from Animal import Animal
 import random
+import json
 
 
 class Zoo():
@@ -204,6 +205,14 @@ class Zoo():
         self.see_animals()
         self.print_grave_yard()
 
+    def load(self, filename):
+        file = open(filename, "r")
+        animals_info = json.loads(file.read())
+        file.close()
+        for animal in animals_info:
+            self.animals.append(Animal(animal["name"], animal["age"], animal["gender"], animal["weight"], animal["species"], animal["life_expectancy"], animal["food_type"], animal["gestation_period"], animal["newborn_weight"], animal["average_weight"], animal["weight_age_ratio"], animal["food_weight_ratio"]))
+        file.close()
+
 
 def main():
     animal1 = Animal("name", 18, "male", 87, "species", 100, "carnivore", 3, 20, 100, 200, 20)
@@ -212,6 +221,7 @@ def main():
     animal4 = Animal("animal4", 18, "female", 87, "species", 100, "carnivore", 3, 20, 100, 200, 20)
     animals = [animal1, animal2, animal3, animal4]
     zoo = Zoo(animals, 20, 1000)
+    zoo.load("database.json")
     command = ""
     while(True):
         command = input("enter command:")
